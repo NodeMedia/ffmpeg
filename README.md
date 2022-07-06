@@ -35,6 +35,7 @@ ffmpeg -re -i /home/id3as/Videos/demo.mp4 \
   -tile-columns 2 -frame-parallel 1 -qmin 4 -qmax 48 -b:v 3000k -c:v vp9 \
   -b:a 128k -c:a libopus -f flv rtmp://192.168.0.2/live/demo
 ```
+[Reference:Live encoding with VP9 using FFmpeg](https://developers.google.com/media/vp9/live-encoding)
 
 ## Libraries
 
