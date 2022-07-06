@@ -11,7 +11,9 @@ such as audio, video, subtitles and related metadata.
 
 ### Build from source
 ```
-./configure --enable-small --disable-doc --enable-libsrt --enable-libfreetype --enable-libspeex --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-openssl --enable-gpl --enable-nonfree --enable-version3
+./configure --enable-small --disable-doc --enable-libsrt --enable-libfreetype \
+  --enable-libspeex --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus \
+  --enable-openssl --enable-gpl --enable-nonfree --enable-version3
 ```
 
 ### Examples of encoding parameters in action
