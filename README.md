@@ -4,6 +4,11 @@ FFmpeg README
 FFmpeg is a collection of libraries and tools to process multimedia content
 such as audio, video, subtitles and related metadata.
 
+## extensions by NodeMedia
+* FLV support vp8 id=10
+* FLV support vp9 id=11
+* FLV support opus id=13
+
 ## Libraries
 
 * `libavcodec` provides implementation of a wider range of codecs.

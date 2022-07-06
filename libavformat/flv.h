@@ -57,6 +57,10 @@ enum {
 };
 
 enum FlvTagType {
+    FLV_TAG_TYPE_ONCLS = 0x00,
+    FLV_TAG_TYPE_ONERR = 0x01,
+    FLV_TAG_TYPE_ONPUB = 0x06,
+    FLV_TAG_TYPE_UNPUB = 0x07,
     FLV_TAG_TYPE_AUDIO = 0x08,
     FLV_TAG_TYPE_VIDEO = 0x09,
     FLV_TAG_TYPE_META  = 0x12,
@@ -99,6 +103,7 @@ enum {
     FLV_CODECID_PCM_MULAW            = 8 << FLV_AUDIO_CODECID_OFFSET,
     FLV_CODECID_AAC                  = 10<< FLV_AUDIO_CODECID_OFFSET,
     FLV_CODECID_SPEEX                = 11<< FLV_AUDIO_CODECID_OFFSET,
+    FLV_CODECID_OPUS                 = 13<< FLV_AUDIO_CODECID_OFFSET,
 };
 
 enum {
@@ -110,6 +115,8 @@ enum {
     FLV_CODECID_H264    = 7,
     FLV_CODECID_REALH263= 8,
     FLV_CODECID_MPEG4   = 9,
+    FLV_CODECID_VP8     = 10,
+    FLV_CODECID_VP9     = 11,
 };
 
 enum {

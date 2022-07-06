@@ -218,6 +218,8 @@ static int flv_same_audio_codec(AVCodecParameters *apar, int flags)
                    ? AV_CODEC_ID_PCM_U8
                    : AV_CODEC_ID_PCM_S16LE;
         return codec_id == apar->codec_id;
+    case FLV_CODECID_OPUS:
+        return apar->codec_id == AV_CODEC_ID_OPUS;
     case FLV_CODECID_AAC:
         return apar->codec_id == AV_CODEC_ID_AAC;
     case FLV_CODECID_ADPCM:
@@ -259,6 +261,9 @@ static void flv_set_audio_codec(AVFormatContext *s, AVStream *astream,
         apar->codec_id = apar->bits_per_coded_sample == 8
                            ? AV_CODEC_ID_PCM_U8
                            : AV_CODEC_ID_PCM_S16LE;
+        break;
+    case FLV_CODECID_OPUS:
+        apar->codec_id = AV_CODEC_ID_OPUS;
         break;
     case FLV_CODECID_AAC:
         apar->codec_id = AV_CODEC_ID_AAC;
@@ -321,6 +326,10 @@ static int flv_same_video_codec(AVCodecParameters *vpar, int flags)
         return vpar->codec_id == AV_CODEC_ID_VP6A;
     case FLV_CODECID_H264:
         return vpar->codec_id == AV_CODEC_ID_H264;
+    case FLV_CODECID_VP8:
+        return vpar->codec_id == AV_CODEC_ID_VP8;
+    case FLV_CODECID_VP9:
+        return vpar->codec_id == AV_CODEC_ID_VP9;
     default:
         return vpar->codec_tag == flv_codecid;
     }
@@ -366,6 +375,14 @@ static int flv_set_video_codec(AVFormatContext *s, AVStream *vstream,
         par->codec_id = AV_CODEC_ID_H264;
         vstreami->need_parsing = AVSTREAM_PARSE_HEADERS;
         ret = 3;     // not 4, reading packet type will consume one byte
+        break;
+    case FLV_CODECID_VP8:
+        par->codec_id = AV_CODEC_ID_VP8;
+        vstreami->need_parsing = AVSTREAM_PARSE_NONE;
+        break;
+    case FLV_CODECID_VP9:
+        par->codec_id = AV_CODEC_ID_VP9;
+        vstreami->need_parsing = AVSTREAM_PARSE_NONE;
         break;
     case FLV_CODECID_MPEG4:
         par->codec_id = AV_CODEC_ID_MPEG4;
@@ -1242,6 +1259,7 @@ retry_duration:
     }
 
     if (st->codecpar->codec_id == AV_CODEC_ID_AAC ||
+        st->codecpar->codec_id == AV_CODEC_ID_OPUS ||
         st->codecpar->codec_id == AV_CODEC_ID_H264 ||
         st->codecpar->codec_id == AV_CODEC_ID_MPEG4) {
         int type = avio_r8(s->pb);
@@ -1268,6 +1286,7 @@ retry_duration:
             }
         }
         if (type == 0 && (!st->codecpar->extradata || st->codecpar->codec_id == AV_CODEC_ID_AAC ||
+            st->codecpar->codec_id == AV_CODEC_ID_OPUS ||
             st->codecpar->codec_id == AV_CODEC_ID_H264)) {
             AVDictionaryEntry *t;
 
